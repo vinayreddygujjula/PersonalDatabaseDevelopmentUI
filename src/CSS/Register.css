@@ -1,0 +1,67 @@
+.signup-div{
+    display: flex;
+    flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+.signInUpBtn {
+    display: inline-block;
+    padding: 10px 20px;
+    margin: 10px;
+    font-size: 16px;
+    font-weight: bold;
+    color: white;
+    background-color: #9DA1FF;
+    border: 2px solid #9DA1FF;
+    border-radius: 25px;
+    text-align: center;
+    text-decoration: none;
+    transition: background-color 0.3s, border-color 0.3s, transform 0.2s;
+  }
+  
+  .signInUpBtn:hover {
+    background-color: #1565c0;
+    border-color: #1565c0;
+    transform: scale(1.05);
+  }
+  
+  .signInUpBtn:active {
+    background-color: #0d47a1;
+    border-color: #0d47a1;
+    transform: scale(0.95);
+  }
+
+  /* LoginForm.css */
+
+.signup-form {
+    max-width: 400px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  }
+  
+  .signup-form h2 {
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  
+  .signup-form input {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+  
+  
+  .signup-form button:hover {
+    background-color: #0056b3;
+  }
+  
+  .error-message {
+    color: red;
+    margin-top: 10px;
+  }
+  
