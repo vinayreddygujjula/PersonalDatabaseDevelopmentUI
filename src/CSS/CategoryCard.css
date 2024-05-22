@@ -1,0 +1,8 @@
+.cardActions{
+    display: flex;
+    justify-content: flex-end;
+}
+.cardContent{
+    margin: 10px;
+    border: solid black 1px;
+}

@@ -80,7 +80,7 @@
   background-color: #c0392b;
 }
 
-.content {
+.contentButton {
   padding: 20px;
   overflow-y: auto;
   flex: 1;
@@ -90,6 +90,16 @@
   display: flex;
   justify-content: flex-end;
   margin-top: 20px;
+}
+
+.new-container {
+  margin-top: 20px;
+  display: flex;
+  justify-content: flex-start;
+  border: 3px solid black;
+  border-radius: 15%;
+  width: 150px !important;
+  height: 100px;
 }
 
 .outlined-icon-button {
