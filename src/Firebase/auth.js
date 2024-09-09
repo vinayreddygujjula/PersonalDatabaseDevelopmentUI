@@ -1,5 +1,5 @@
 // src/auth.js
-import { createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut } from "firebase/auth";
+import { createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, sendPasswordResetEmail } from "firebase/auth";
 import { auth } from "./firebaseConfig";
 
 export const registerWithEmail = async (email, password) => {
@@ -23,6 +23,15 @@ export const loginWithEmail = async (email, password) => {
 export const logout = async () => {
   try {
     await signOut(auth);
+  } catch (error) {
+    throw error;
+  }
+};
+
+export const forgotPassword = async (email) => {
+  try {
+    await sendPasswordResetEmail(auth, email);
+    console.log('Password reset email sent');
   } catch (error) {
     throw error;
   }

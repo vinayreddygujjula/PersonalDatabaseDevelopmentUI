@@ -4,6 +4,8 @@ import { Tooltip, IconButton, Dialog, DialogActions, DialogContent, DialogConten
 import AddIcon from '@mui/icons-material/Add';
 import LogoutIcon from '@mui/icons-material/Logout';
 import CategoryCard from './CategoryCard';
+import { logout } from "../Firebase/auth";
+import { Link, useNavigate } from 'react-router-dom';
 import '../CSS/Dashboard.css';
 
 const Dashboard = () => {
@@ -12,6 +14,7 @@ const Dashboard = () => {
   const [categories, setCategories] = useState([]);
   const [confirmOpen, setConfirmOpen] = useState(false);
   const [confirmationMessage, setConfirmationMessage] = useState("");
+  const navigate = useNavigate();
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -38,7 +41,9 @@ const Dashboard = () => {
   };
 
   const handleLogout = () => {
-    console.log('Logout clicked');
+    logout();
+    alert("Logout successful!");
+    navigate('/');
   };
 
   const handleDelete = (index) => {

@@ -5,6 +5,7 @@ import Register from './Components/Register';
 import Login from './Components/Login';
 import NotFound from './Components/NotFound';
 import Dashboard from './Components/Dashboard';
+import ForgotPassword from './Components/ForgotPassword';
 
 function App() {
   return (
@@ -13,6 +14,7 @@ function App() {
           <Route path="/" element={<HomePage />} />
           <Route path="register" element={<Register />} />
           <Route path="login" element={<Login />} />
+          <Route path="forgotpassword" element={<ForgotPassword />} />
           <Route path="dashboard" element={<Dashboard />} />
           <Route path="*" element={<NotFound />} />
       </Routes>
