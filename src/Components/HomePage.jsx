@@ -1,18 +1,22 @@
-// src/App.js
 import React from 'react';
-import { Button } from '@mui/material';
 import { Link } from "react-router-dom";
-import '../CSS/Home.css'
+import '../CSS/Home.css';
 
 const HomePage = () => {
   return (
-    <div className='homeDiv'>
-      <h1>Personal Database</h1>
-      <h3>Your Personal Database</h3>
-      
-      <div className='homeBtnsDiv'>
-        <Link to="/login" variant="outlined"><div className='signInUpBtn'>Sign In</div></Link>
-        <Link to="/register" variant="outlined"><div className='signInUpBtn'>Sign Up</div></Link>
+    <div className='homeContainer'>
+      <div className='formContainer'>
+        <h1>Welcome back!</h1>
+        <p>Simplify your workflow and organize your data.</p>
+        
+        <div className='illustrationContainer'>
+          <img src='/illustration.png' alt='Illustration' />
+        </div>
+        
+        <div className='buttonsContainer'>
+          <Link to="/login" className='loginBtn'>Login</Link>
+          <Link to="/register" className='loginBtn'>Sign up</Link>
+        </div>
       </div>
     </div>
   );
