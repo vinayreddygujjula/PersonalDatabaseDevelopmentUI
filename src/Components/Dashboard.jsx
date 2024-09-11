@@ -58,13 +58,13 @@ const Dashboard = () => {
         </div>
         <div className="contentButton">
           <div className="button-container">
-            <Button onClick={handleClickOpen} variant="contained" startIcon={<AddIcon />}>
+            <Button onClick={handleClickOpen} variant="contained" startIcon={<AddIcon />} className='create-btn'>
               Create New Category
             </Button>
           </div>
           <Grid container spacing={1}>
             {categories.map((category, index) => (
-              <Grid item xs={12} sm={6} md={3} key={index}>
+              <Grid item xs={12} sm={6} md={4} key={index}>
                 <CategoryCard
                   category={category}
                   onDelete={() => handleDelete(index)}
