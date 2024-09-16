@@ -5,6 +5,7 @@ import Register from './Components/Register';
 import Login from './Components/Login';
 import NotFound from './Components/NotFound';
 import Dashboard from './Components/Dashboard';
+import JobsTemplate from './Components/JobsTemplate'
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
           <Route path="login" element={<Login />} />
           <Route path="dashboard" element={<Dashboard />} />
           <Route path="*" element={<NotFound />} />
+          <Route path='jobs' element={<JobsTemplate/>} />
       </Routes>
     </BrowserRouter>
   );
