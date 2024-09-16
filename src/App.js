@@ -5,7 +5,9 @@ import Register from './Components/Register';
 import Login from './Components/Login';
 import NotFound from './Components/NotFound';
 import Dashboard from './Components/Dashboard';
+import ForgotPassword from './Components/ForgotPassword';
 import JobsTemplate from './Components/JobsTemplate'
+
 function App() {
   return (
     <BrowserRouter>
@@ -14,6 +16,7 @@ function App() {
           <Route path="register" element={<Register />} />
           <Route path="login" element={<Login />} />
           <Route path="dashboard" element={<Dashboard />} />
+          <Route path="forgotpassword" element={<ForgotPassword />} />
           <Route path="*" element={<NotFound />} />
       <Route path='jobs' element={<JobsTemplate/>} />
       </Routes>
