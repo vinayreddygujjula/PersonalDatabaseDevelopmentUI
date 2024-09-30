@@ -1,0 +1,81 @@
+.subCategoryDashboard {
+    display: flex;
+    height: 100vh;
+    font-family: Arial, sans-serif;
+    width: 100% !important;
+  }
+  .main-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .sidebar {
+    width: 250px;
+    background-color: #2c3e50;
+    color: white;
+    padding: 20px;
+  }
+  
+  .sidebar h2 {
+    margin-top: 0;
+  }
+  
+  .sidebar nav ul {
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  .sidebar nav ul li {
+    margin: 15px 0;
+  }
+  
+  .sidebar nav ul li a {
+    color: white;
+    text-decoration: none;
+    display: block;
+    padding: 10px;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+  }
+  
+  .sidebar nav ul li a:hover {
+    background-color: #34495e;
+  }
+  
+  .contentButton {
+    padding: 20px;
+    overflow-y: auto;
+    flex: 1;
+  }
+  
+  .button-container-sc {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+  }
+  
+  .new-container {
+    margin-top: 20px;
+    display: flex;
+    justify-content: flex-start;
+    border: 3px solid black;
+    border-radius: 15%;
+    width: 150px !important;
+    height: 100px;
+  }
+  
+  .outlined-icon-button {
+    border: 2px solid currentColor;
+    border-radius: 50%;
+  }
+  
+  .create-btn{
+    padding: 10px;
+    background-color: #333 !important;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 1rem;
+  }
