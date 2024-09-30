@@ -29,7 +29,6 @@ export const resetPassword = async (email) => {
   }
 };
 
-
 export const logout = async () => {
   try {
     await signOut(auth);

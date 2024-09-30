@@ -3,7 +3,7 @@ import { resetPassword } from "../Firebase/auth";
 import { Link, useNavigate } from 'react-router-dom';
 import '../CSS/Login.css';
 
-const Login = () => {
+const ForgotPassword = () => {
   const [email, setEmail] = useState("");
   const [error, setError] = useState("");
   const navigate = useNavigate();
@@ -40,4 +40,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default ForgotPassword;
