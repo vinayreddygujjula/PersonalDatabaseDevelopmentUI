@@ -11,7 +11,7 @@ const ForgotPassword = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError('');
-
+    
     try {
       await resetPassword(email);
       // setMessage('Password reset email sent! Please check your inbox.');
@@ -23,7 +23,7 @@ const ForgotPassword = () => {
   return (
     <div className="login-container">
       <div className="login-box">
-        <h2>Enter your email</h2>
+        <h2>Enter your email to reset password</h2>
         <form className="login-form" onSubmit={handleSubmit}>
           <input
             type="text"

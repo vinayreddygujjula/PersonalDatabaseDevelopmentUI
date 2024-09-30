@@ -1,0 +1,71 @@
+/* Container for the entire subcategory details page */
+.subCategoryDetailContainer {
+    max-width: 800px;
+    margin: 40px auto;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  /* Back button styling */
+  .backButton {
+    background-color: #333;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-bottom: 20px;
+    transition: background-color 0.3s ease;
+  }
+  
+  .backButton:hover {
+    background-color: #555;
+  }
+  
+  /* Title of the subcategory */
+  .subCategoryTitle {
+    font-size: 2rem;
+    color: #333;
+    margin-bottom: 10px;
+    text-align: center;
+  }
+  
+  /* Description of the subcategory */
+  .subCategoryDescription {
+    font-size: 1.1rem;
+    color: #666;
+    margin-bottom: 30px;
+    text-align: center;
+  }
+  
+  /* Table to display the dynamic fields */
+  .fieldsTable {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+  }
+  
+  .fieldsTable th, .fieldsTable td {
+    padding: 12px 15px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+  }
+  
+  .fieldsTable th {
+    background-color: #f0f0f0;
+    color: #333;
+  }
+  
+  .fieldsTable td {
+    color: #666;
+  }
+  
+  /* Message when no fields are available */
+  .noFieldsMessage {
+    text-align: center;
+    font-size: 1.1rem;
+    color: #999;
+  }
+  

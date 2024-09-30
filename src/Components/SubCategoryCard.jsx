@@ -4,9 +4,9 @@ import MoreVertIcon from '@mui/icons-material/MoreVert';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward'; 
 import DeleteIcon from '@mui/icons-material/Delete';
 import { useNavigate } from 'react-router-dom'; // Import useNavigate for navigation
-import '../CSS/CategoryCard.css';
+import '../CSS/SubCategoryCard.css';
 
-const CategoryCard = ({ category, onDelete }) => {
+function SubCategoryCard({ category, subCategory, index, onDelete }){
   const [anchorEl, setAnchorEl] = useState(null);
   const navigate = useNavigate(); // Initialize navigate hook
 
@@ -23,14 +23,14 @@ const CategoryCard = ({ category, onDelete }) => {
     setAnchorEl(null);
   };
 
-  const handleNavigate = (cate) => {
-    navigate('/category/' + cate.toLowerCase()); // Navigate to /category page
+  const handleNavigate = (subCategory) => {
+    navigate('/category/' + category.toLowerCase()+'/'+index); // Navigate to /category page
   };
 
   return (
     <Card sx={{ maxWidth: 345, margin: 1, display: 'flex', flexDirection: 'column' }} variant="outlined" className="cardContent">
       <CardHeader
-        avatar={<Avatar>{category[0]}</Avatar>}
+        avatar={<Avatar>{subCategory[0]}</Avatar>}
         action={
           <>
             <IconButton aria-label="settings" onClick={handleMenuClick}>
@@ -48,25 +48,25 @@ const CategoryCard = ({ category, onDelete }) => {
             </Menu>
           </>
         }
-        title={category}
+        title={subCategory}
       />
       <CardContent>
         <Typography variant="h5" component="div">
-          {category}
+          {subCategory}
         </Typography>
       </CardContent>
       <CardActions className="cardActions">
         <Button
           variant="contained"
-          onClick={() => handleNavigate(category)} 
+          onClick={() => handleNavigate(subCategory)} 
           sx={{ width: '100%', mt: 'auto' }} 
           className='cate-nav-btn'
         >
-          Go to {category} <ArrowForwardIcon />
+          View Details <ArrowForwardIcon />
         </Button>
       </CardActions>
     </Card>
   );
 };
 
-export default CategoryCard;
+export default SubCategoryCard

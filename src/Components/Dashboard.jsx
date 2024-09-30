@@ -1,17 +1,30 @@
-// src/components/Dashboard.js
-import React, { useState } from 'react';
-import { Tooltip, IconButton, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, TextField, Button, Grid } from '@mui/material';
+import React, { useState, useEffect } from 'react';
+import { Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, TextField, Button, Grid } from '@mui/material';
+import { useNavigate } from 'react-router-dom';
 import AddIcon from '@mui/icons-material/Add';
-import LogoutIcon from '@mui/icons-material/Logout';
 import CategoryCard from './CategoryCard';
 import '../CSS/Dashboard.css';
+import Header from './Header';
 
 const Dashboard = () => {
   const [open, setOpen] = useState(false);
-  const [input, setInput] = useState("");
-  const [categories, setCategories] = useState([]);
+  const [categoryInput, setCategoryInput] = useState("");
+  const [categories, setCategories] = useState([{ name: ""}]);
   const [confirmOpen, setConfirmOpen] = useState(false);
   const [confirmationMessage, setConfirmationMessage] = useState("");
+  const navigate = useNavigate();
+
+  const handleNavigate = (category) => {
+    navigate(`/${category.toLowerCase()}`); // Navigate to /category page
+  };
+
+  // Load categories from sessionStorage on mount
+  useEffect(() => {
+    const savedCategories = sessionStorage.getItem('categories');
+    if (savedCategories) {
+      setCategories(JSON.parse(savedCategories));
+    }
+  }, []);
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -21,41 +34,34 @@ const Dashboard = () => {
     setOpen(false);
   };
 
-  const handleInputChange = (event) => {
-    setInput(event.target.value);
+  const handleCategoryInputChange = (event) => {
+    setCategoryInput(event.target.value);
   };
 
   const handleDialogSubmit = () => {
-    setCategories([...categories, input]);
-    setConfirmationMessage(`New Category ${input} has been created`);
+    const newCategories = [...categories, { name: categoryInput }];
+    setCategories(newCategories);
+    sessionStorage.setItem('categories', JSON.stringify(newCategories)); // Save to sessionStorage
+    setConfirmationMessage(`New Category "${categoryInput}" has been created`);
     setConfirmOpen(true);
     setOpen(false);
-    setInput("");
+    setCategoryInput("");
   };
 
   const handleConfirmClose = () => {
     setConfirmOpen(false);
   };
 
-  const handleLogout = () => {
-    console.log('Logout clicked');
-  };
-
   const handleDelete = (index) => {
-    setCategories(categories.filter((_, i) => i !== index));
+    const newCategories = categories.filter((_, i) => i !== index);
+    setCategories(newCategories);
+    sessionStorage.setItem('categories', JSON.stringify(newCategories)); // Update sessionStorage
   };
 
   return (
     <div className="dashboard">
       <div className="main-content">
-        <div className="header">
-          <h1>Dashboard Page</h1>
-          <Tooltip title="Logout">
-            <IconButton onClick={handleLogout} color="inherit" className="outlined-icon-button">
-              <LogoutIcon />
-            </IconButton>
-          </Tooltip>
-        </div>
+        <Header title="Dashboard"/>
         <div className="contentButton">
           <div className="button-container">
             <Button onClick={handleClickOpen} variant="contained" startIcon={<AddIcon />} className='create-btn'>
@@ -63,10 +69,10 @@ const Dashboard = () => {
             </Button>
           </div>
           <Grid container spacing={1}>
-            {categories.map((category, index) => (
+            {categories.filter(category => category.name.length > 1).map((category, index) => (
               <Grid item xs={12} sm={6} md={4} key={index}>
                 <CategoryCard
-                  category={category}
+                  category={category.name}
                   onDelete={() => handleDelete(index)}
                 />
               </Grid>
@@ -76,23 +82,46 @@ const Dashboard = () => {
         <Dialog open={open} onClose={handleClose} fullWidth>
           <DialogTitle>New Category</DialogTitle>
           <DialogContent>
+            <DialogContentText>
+              Please enter category name.
+            </DialogContentText>
             <TextField
               autoFocus
               margin="dense"
               label="Category Name"
               type="text"
               fullWidth
-              value={input}
-              onChange={handleInputChange}
+              value={categoryInput}
+              onChange={handleCategoryInputChange}
               required
             />
-            <DialogContentText>
-              Please enter category name.
-            </DialogContentText>
+            {/* <TextField
+              margin="dense"
+              label="Description for the Category"
+              type="text"
+              fullWidth
+              value={descriptionInput}
+              onChange={handleDescriptionInputChange}
+              sx={{
+                '& .MuiOutlinedInput-root': {
+                  '&.Mui-focused fieldset': {
+                    borderColor: 'black', 
+                    borderWidth: '2px', 
+                  },
+                },
+                '& .MuiInputLabel-root': {
+                  '&.Mui-focused': {
+                    color: 'black',
+                  },
+                },
+              }}
+            /> */}
           </DialogContent>
           <DialogActions>
-            <Button onClick={handleClose} variant="contained">Cancel</Button>
-            <Button onClick={input.length > 0 ? handleDialogSubmit : () => {}} variant="contained">Add</Button>
+            <Button onClick={handleClose} variant="contained" className='create-btn'>Cancel</Button>
+            <Button onClick={categoryInput.length > 0 ? handleDialogSubmit : () => {}} variant="contained" className='create-btn'>
+              Add
+            </Button>
           </DialogActions>
         </Dialog>
 
@@ -104,7 +133,7 @@ const Dashboard = () => {
             </DialogContentText>
           </DialogContent>
           <DialogActions>
-            <Button onClick={handleConfirmClose} variant="contained">OK</Button>
+            <Button className='create-btn' onClick={handleConfirmClose} variant="contained">OK</Button>
           </DialogActions>
         </Dialog>
       </div>
