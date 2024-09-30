@@ -1,15 +1,17 @@
 import React, { useEffect, useState } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useLocation, useParams, useNavigate } from 'react-router-dom';
 import '../CSS/SubCategoryDetail.css';
 
 const SubCategoryDetail = () => {
   const { index } = useParams(); // Get the index from the URL
+  // const { state } = useLocation();
+  // const category = state?.subCategory;
   const [subCategory, setSubCategory] = useState(null);
   const navigate = useNavigate();
 
   useEffect(() => {
     // Retrieve subCategories from sessionStorage
-    const savedSubCategories = sessionStorage.getItem('subCategories');
+    const savedSubCategories = sessionStorage.getItem("subCategory");
     if (savedSubCategories) {
       const subCategories = JSON.parse(savedSubCategories);
       setSubCategory(subCategories[index]); // Set the selected subcategory
@@ -30,7 +32,7 @@ const SubCategoryDetail = () => {
       {/* Subcategory Title */}
       <h1 className="subCategoryTitle">{subCategory.name}</h1>
       <p className="subCategoryDescription">{subCategory.description}</p>
-
+    {index}
       {/* Render dynamic fields in a table */}
       {subCategory.fields && subCategory.fields.length > 0 ? (
         <table className="fieldsTable">

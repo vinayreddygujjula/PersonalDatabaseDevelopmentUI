@@ -23,8 +23,8 @@ function SubCategoryCard({ category, subCategory, index, onDelete }){
     setAnchorEl(null);
   };
 
-  const handleNavigate = (subCategory) => {
-    navigate('/category/' + category.toLowerCase()+'/'+index); // Navigate to /category page
+  const handleNavigate = () => {
+    navigate(`/category/${category.toLowerCase()}/${index}`); // Navigate to /category page
   };
 
   return (
@@ -53,6 +53,7 @@ function SubCategoryCard({ category, subCategory, index, onDelete }){
       <CardContent>
         <Typography variant="h5" component="div">
           {subCategory}
+          {index}
         </Typography>
       </CardContent>
       <CardActions className="cardActions">

@@ -22,7 +22,7 @@ function SubCategoryDashboard() {
 
   // Load categories from sessionStorage on mount
   useEffect(() => {
-    const savedSubCategories = sessionStorage.getItem({category});
+    const savedSubCategories = sessionStorage.getItem("subCategory");
     console.log(category);
     if (savedSubCategories) {
       const parsedSubCategories = JSON.parse(savedSubCategories);
@@ -54,7 +54,7 @@ function SubCategoryDashboard() {
       { name: subCategoryInput, fields: textFieldValues }
     ]; // Include the dynamic fields
     setSubCategories(newSubCategories);
-    sessionStorage.setItem({category}, JSON.stringify(newSubCategories)); // Save to sessionStorage
+    sessionStorage.setItem("subCategory", JSON.stringify(newSubCategories)); // Save to sessionStorage
     setConfirmationMessage(`New Sub-Category "${subCategoryInput}" has been created`);
     setConfirmOpen(true);
     setOpen(false);
@@ -71,7 +71,7 @@ function SubCategoryDashboard() {
   const handleDelete = (index) => {
     const newSubCategories = subCategories.filter((_, i) => i !== index);
     setSubCategories(newSubCategories);
-    sessionStorage.setItem({category}, JSON.stringify(newSubCategories)); // Update sessionStorage
+    sessionStorage.setItem("subCategory", JSON.stringify(newSubCategories)); // Update sessionStorage
   };
   
 
