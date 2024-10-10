@@ -5,7 +5,7 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background-color: #FFFDD0;
+  background-color: #e5e6fa;
 }
 
 code {
@@ -14,4 +14,8 @@ code {
 }
 #root{
   width: 100%;
+}
+
+html {
+  background-color: #e5e6fa;
 }

@@ -1,12 +1,17 @@
 import React, { useState } from "react";
 import { loginWithEmail } from "../Firebase/auth";
 import { Link, useNavigate } from 'react-router-dom';
+import loginImage from "../Assets/illustration.png";
 import '../CSS/Login.css';
+import { ToastContainer, toast } from 'react-toastify';
+import '../index.css';
 
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate();
 
   const handleSubmit = async (event) => {
@@ -20,30 +25,53 @@ const Login = () => {
     }
   };
 
+  const handleShowPasswordToggle = () => {
+    setShowPassword(!showPassword);
+  };
+
   return (
-    <div className="login-container">
-      <div className="login-box">
-        <h2>Login</h2>
-        <form className="login-form" onSubmit={handleSubmit}>
+    <div className="login-form-container">
+      <h2>Welcome back!</h2>
+      <img src={loginImage} className="login-image" alt="loginImage"/>
+      <form className="login-form" onSubmit={handleSubmit}>
+        <div className="form-group">
           <input
-            type="text"
-            placeholder="Username"
+            type="email"
             value={email}
+            placeholder="Email"
             onChange={(e) => setEmail(e.target.value)}
             required
           />
+        </div>
+        <div className="form-group">
           <input
-            type="password"
-            placeholder="Password"
+            type={showPassword ? 'text' : 'password'}
             value={password}
+            placeholder="Password"
             onChange={(e) => setPassword(e.target.value)}
             required
           />
+        </div>
+        <div className="form-options">
+          <label>
+            <input
+              type="checkbox"
+              checked={showPassword}
+              onChange={handleShowPasswordToggle}
+            />
+            Show Password
+          </label>
           <Link to="/forgotpassword" className="forgot-password">Forgot Password?</Link>
-          <button className="login-button" type="submit">Login</button>
-        </form>
+        </div>
         {error && <p className="error-message">{error}</p>}
-      </div>
+        <button type="submit" className="login-button" disabled={loading}>
+          {loading ? 'Logging in...' : 'LOGIN'}
+        </button>
+        <div className="signup-container">
+          <Link to="/register" className="forgot-password">Don't have an account Sign Up</Link>
+        </div>
+      </form>
+      <ToastContainer position="top-right" autoClose={3000} />
     </div>
   );
 };
