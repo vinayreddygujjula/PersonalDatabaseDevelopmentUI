@@ -1,9 +1,8 @@
 import React from 'react'
-import { Tooltip, IconButton } from '@mui/material';
-import { useNavigate } from 'react-router-dom';
-import LogoutIcon from '@mui/icons-material/Logout';
+import { useNavigate, Link } from 'react-router-dom';
 import { logout } from "../Firebase/auth";
 import '../CSS/Header.css';
+import logo from '../Assets/logo.png'
 function Header({title}) {
 
     const navigate = useNavigate();
@@ -16,16 +15,23 @@ function Header({title}) {
         handleNavigate('');
       };
     return (
-    <div>
-        <div className="header">
-          <h1>{title}</h1>
-          <Tooltip title="Logout">
-            <IconButton onClick={handleLogout} color="inherit" className="outlined-icon-button">
-                <LogoutIcon />
-            </IconButton>
-        </Tooltip>
-        </div>
-    </div>
+      <header className="header">
+            <div className="header-left">
+                <img
+                    src={logo}
+                    alt="Logo"
+                    className="header-logo"
+                />
+            </div>
+            <div className="header-middle">
+                <h2>{title}</h2>
+            </div>
+            <div className="header-right">
+                <Link to="/" className="header-link">
+                    <i className="bi bi-box-arrow-right"></i>
+                </Link>
+            </div>
+        </header>
   )
 }
 
