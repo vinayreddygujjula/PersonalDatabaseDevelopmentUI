@@ -7,7 +7,6 @@ import Register from './Components/Register';
 import Login from './Components/Login';
 import NotFound from './Components/NotFound';
 import Dashboard from './Components/Dashboard';
-import JobsTemplate from './Components/JobsTemplate'
 import ForgotPassword from './Components/ForgotPassword';
 import SubCategoryDashboard from './Components/SubCategoryDashboard';
 import SubCategoryDetail from './Components/SubCategoryDetail';
@@ -35,28 +34,7 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
-        {/* Home page route */}
-        <Route path="/" element={user? <Navigate to="/dashboard"/>:<HomePage />} />
-
-        {/* Prevent logged-in users from accessing login and register */}
-        <Route path="register" element={user ? <Navigate to="/dashboard" /> : <Register />} />
-        <Route path="login" element={user ? <Navigate to="/dashboard" /> : <Login />} />
-
-        {/* Forgot password page is accessible to everyone */}
-        <Route path="forgotpassword" element={<ForgotPassword />} />
-
-        {/* Dashboard is protected, only accessible if user is logged in */}
-        <Route path="dashboard" element={user ? <Dashboard /> : <Navigate to="/login" />} />
-
-        {/* 404 page for undefined routes */}
-        <Route path="*" element={<NotFound />} />
-
-        {/* Dynamic category route */}
-        <Route path="/category/:category" element={user ? <SubCategoryDashboard /> : <Navigate to="/login" />} />
-
-        {/* SubCategoryDetail route */}
-        <Route path="/category/:category/:index" element={user ? <SubCategoryDetail /> : <Navigate to="/login" />} />
-
+        <Route path = "/" element = {<Login/>}/>
       </Routes>
     </BrowserRouter>
   );
