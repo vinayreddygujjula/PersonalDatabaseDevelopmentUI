@@ -2,10 +2,12 @@ import React, { useState } from "react";
 import { registerWithEmail } from "../Firebase/auth";
 import '../CSS/Register.css';
 import { useNavigate } from 'react-router-dom';
+import signupImage from "../Assets/signup.png";
 
 const Register = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [name, setName] = useState("");
   const [error, setError] = useState("");
   const navigate = useNavigate();
 
@@ -24,8 +26,16 @@ const Register = () => {
   return (
     <div className="register-container">
       <div className="register-box">
-        <h2>Register</h2>
+        <h2>SignUp</h2>
+        <img className="signup-image" src = { signupImage } />
         <form className="register-form" onSubmit={handleSubmit}>
+        <input
+            type="text"
+            placeholder="Name"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+            required
+          />
           <input
             type="email"
             placeholder="Email"
@@ -40,7 +50,7 @@ const Register = () => {
             onChange={(e) => setPassword(e.target.value)}
             required
           />
-          <button className="register-button" type="submit">Register</button>
+          <button className="signup-button" type="submit">Register</button>
         </form>
         {error && <p className="error-message">{error}</p>}
       </div>

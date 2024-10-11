@@ -1,43 +1,67 @@
-import React, { useState } from "react";
+import React, { useState } from 'react';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import '../CSS/ForgotPassword.css'
+import { useNavigate } from 'react-router-dom';
+import forgotPasswordImage from "../Assets/resetpassword.jpg"
 import { resetPassword } from "../Firebase/auth";
-import { Link, useNavigate } from 'react-router-dom';
-import '../CSS/Login.css';
-
+ 
 const ForgotPassword = () => {
-  const [email, setEmail] = useState("");
+  const [email, setEmail] = useState('');
   const [error, setError] = useState("");
   const navigate = useNavigate();
-
+ 
+  const handleCancel = () => {
+    navigate('/');
+  };
+ 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setError('');
-    
+ 
+    if (!email) {
+      toast.error('Please enter an email.');
+      return;
+    }
+
     try {
       await resetPassword(email);
-      // setMessage('Password reset email sent! Please check your inbox.');
+      navigate('/');
     } catch (error) {
+      console.error(error);
       setError('Failed to send password reset email: ' + error.message);
     }
   };
-
+ 
   return (
-    <div className="login-container">
-      <div className="login-box">
-        <h2>Enter your email to reset password</h2>
-        <form className="login-form" onSubmit={handleSubmit}>
+    <div className="forgot-password-form-container">
+      <h2>Reset Password</h2>
+      <img className='forgot-password-image' src = { forgotPasswordImage } alt='forgotPassword'/> 
+      <form className="forgot-password-form" onSubmit={handleSubmit}>
+        <div className="form-group">
           <input
-            type="text"
-            placeholder="email"
+            type="email"
             value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            required
+            placeholder="Email"
+            autoFocus
           />
-          <button className="login-button" type="submit">Submit</button>
-        </form>
-        {error && <p className="error-message">{error}</p>}
-      </div>
+        </div>
+        <div className='info'>
+          <p><span className ="glyphicon glyphicon-info-sign info-icon"></span>
+            If you are registered, a password reset link will be sent to this email address.
+          </p>
+        </div>
+        <div className="button-group">
+          <button type="submit" className="submit-button">
+            Reset Password
+          </button>
+          <button type="button" className="cancel-button" onClick={handleCancel}>
+            Cancel
+          </button>
+        </div>
+      </form>
+      <ToastContainer position="top-right" autoClose={3000} />
     </div>
   );
 };
-
+ 
 export default ForgotPassword;
