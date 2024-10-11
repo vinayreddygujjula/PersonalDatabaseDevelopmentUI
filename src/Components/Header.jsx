@@ -18,7 +18,7 @@ function Header({title}) {
       <header className="header">
             <div className="header-left">
                 <img
-                    src={logo}
+                    src= { logo }
                     alt="Logo"
                     className="header-logo"
                 />

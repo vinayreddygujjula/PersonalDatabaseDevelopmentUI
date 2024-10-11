@@ -1,61 +1,117 @@
-import React, { useEffect, useState } from 'react';
-import { useLocation, useParams, useNavigate } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
+import Header from './Header';
 import '../CSS/SubCategoryDetail.css';
+import axios from 'axios';
 
-const SubCategoryDetail = () => {
-  const { index } = useParams(); // Get the index from the URL
-  // const { state } = useLocation();
-  // const category = state?.subCategory;
-  const [subCategory, setSubCategory] = useState(null);
+function SubCategoryDetails() {
+  const location = useLocation();
+  const { subCategory } = location.state || {};
+  const [subcategoryDetails, setSubcategoryDetails] = useState({});
+  const [fieldName, setFieldName] = useState('');
+  const [fieldValue, setFieldValue] = useState('');
   const navigate = useNavigate();
 
+  // Fetch subcategory details when the component mounts
   useEffect(() => {
-    // Retrieve subCategories from sessionStorage
-    const savedSubCategories = sessionStorage.getItem("subCategory");
-    if (savedSubCategories) {
-      const subCategories = JSON.parse(savedSubCategories);
-      setSubCategory(subCategories[index]); // Set the selected subcategory
+    if (subCategory && subCategory._id) {
+      const fetchSubCategoryDetails = async () => {
+        try {
+          const response = await axios.get(`https://localhost:44392/getsubcategory/${subCategory._id}`);
+          setSubcategoryDetails(response.data);
+        } catch (error) {
+          console.error('Error fetching sub-category details:', error);
+        }
+      };
+      console.log(subcategoryDetails[0]);
+      fetchSubCategoryDetails();
     }
-  }, [index]);
+  }, [subCategory]);
 
-  if (!subCategory) {
-    return <p>Loading...</p>;
-  }
+  const handleAddField = async () => {
+    if (fieldName && fieldValue) {
+      try {
+        // Prepare the request data
+        const requestData = {
+          fields: [
+            {
+              Name: fieldName,
+              Value: fieldValue,
+            },
+          ],
+        };
+
+        // Send the request to update the subcategory
+        await axios.put(`https://localhost:44392/updatesubcategory/${subcategoryDetails._id}`, requestData);
+
+        // Update the state with the new field locally after a successful update
+        setSubcategoryDetails((prevDetails) => ({
+          ...prevDetails,
+          [fieldName]: fieldValue,
+        }));
+
+        // Clear the input fields
+        setFieldName('');
+        setFieldValue('');
+      } catch (error) {
+        console.error('Error updating sub-category:', error);
+      }
+    }
+  };
+
+  // Filter out `_id` and `category_id` or any other fields you don't want to display
+  const filteredDetails = Object.entries(subcategoryDetails).filter(
+    ([key]) => key !== '_id' && key !== 'category_id'
+  );
 
   return (
-    <div className="subCategoryDetailContainer">
-      {/* Back Button */}
-      <button className="backButton" onClick={() => navigate(-1)}>
-        &larr; Back
-      </button>
+    <div className="subcategory-details">
+      <Header title={subcategoryDetails.name || 'Subcategory Details'} />
 
-      {/* Subcategory Title */}
-      <h1 className="subCategoryTitle">{subCategory.name}</h1>
-      <p className="subCategoryDescription">{subCategory.description}</p>
-    {index}
-      {/* Render dynamic fields in a table */}
-      {subCategory.fields && subCategory.fields.length > 0 ? (
-        <table className="fieldsTable">
-          <thead>
-            <tr>
-              <th>Field 1</th>
-              <th>Field 2</th>
+      <table className="subcategory-table">
+        <thead>
+          <tr>
+            <th>Key</th>
+            <th>Value</th>
+          </tr>
+        </thead>
+        <tbody>
+          {filteredDetails.map(([key, value]) => (
+            <tr key={key}>
+              <td>{key}</td>
+              <td>
+                {typeof value === 'object' && value !== null
+                  ? JSON.stringify(value) // If value is an object, display its JSON string
+                  : value}
+              </td>
             </tr>
-          </thead>
-          <tbody>
-            {subCategory.fields.map((fieldSet, fieldIndex) => (
-              <tr key={fieldIndex}>
-                <td>{fieldSet.field1}</td>
-                <td>{fieldSet.field2}</td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      ) : (
-        <p className="noFieldsMessage">No additional fields available.</p>
-      )}
+          ))}
+        </tbody>
+      </table>
+
+      <div className="add-field-form">
+        <input
+          type="text"
+          placeholder="Field name"
+          value={fieldName}
+          onChange={(e) => setFieldName(e.target.value)}
+        />
+        <input
+          type="text"
+          placeholder="Field value"
+          value={fieldValue}
+          onChange={(e) => setFieldValue(e.target.value)}
+        />
+        <button className="btn btn-primary" onClick={handleAddField}>
+          Add Field
+        </button>
+      </div>
+
+      <button className="btn btn-secondary" onClick={() => navigate(-1)}>
+        Back
+      </button>
     </div>
   );
-};
+}
 
-export default SubCategoryDetail;
+export default SubCategoryDetails;

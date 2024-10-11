@@ -6,6 +6,7 @@
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
   text-align: center;
   color: #333;
+  padding-top: 15px;
 }
 
 h1 {
@@ -42,7 +43,13 @@ h1 {
 
 .form-options label {
   font-size: 14px;
+  font-weight: normal;
   color: #555;
+  margin-left: 3px;
+}
+
+.form-options input{
+  margin-right: 3px;
 }
 
 .forgot-password {
