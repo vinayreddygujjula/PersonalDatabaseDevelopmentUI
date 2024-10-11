@@ -18,12 +18,16 @@ function SubCategoryDetails() {
       const fetchSubCategoryDetails = async () => {
         try {
           const response = await axios.get(`https://localhost:44392/getsubcategory/${subCategory._id}`);
-          setSubcategoryDetails(response.data);
+          const dataDictionary = response.data.reduce((acc, item) => {
+            acc[item.name] = item.value;
+            return acc;
+          }, {});
+          setSubcategoryDetails(dataDictionary);
         } catch (error) {
           console.error('Error fetching sub-category details:', error);
         }
       };
-      console.log(subcategoryDetails[0]);
+      console.log("subcategoryDetails: ",subcategoryDetails);
       fetchSubCategoryDetails();
     }
   }, [subCategory]);
@@ -61,7 +65,7 @@ function SubCategoryDetails() {
 
   // Filter out `_id` and `category_id` or any other fields you don't want to display
   const filteredDetails = Object.entries(subcategoryDetails).filter(
-    ([key]) => key !== '_id' && key !== 'category_id'
+    ([key]) => !['_id', 'category_id'].includes(key)
   );
 
   return (
@@ -95,21 +99,19 @@ function SubCategoryDetails() {
           placeholder="Field name"
           value={fieldName}
           onChange={(e) => setFieldName(e.target.value)}
+          required
         />
         <input
           type="text"
           placeholder="Field value"
           value={fieldValue}
           onChange={(e) => setFieldValue(e.target.value)}
+          required
         />
         <button className="btn btn-primary" onClick={handleAddField}>
           Add Field
         </button>
       </div>
-
-      <button className="btn btn-secondary" onClick={() => navigate(-1)}>
-        Back
-      </button>
     </div>
   );
 }
