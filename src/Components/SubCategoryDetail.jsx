@@ -11,6 +11,8 @@ function SubCategoryDetails() {
   const [fieldName, setFieldName] = useState('');
   const [fieldValue, setFieldValue] = useState('');
   const navigate = useNavigate();
+  const [showEditModal, setShowEditModal] = useState(false);
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
 
   // Fetch subcategory details when the component mounts
   useEffect(() => {
@@ -63,6 +65,18 @@ function SubCategoryDetails() {
     }
   };
 
+  const handleEditSubCategoryDetails = () => {
+    
+  };
+
+  const handleDeleteSubCategoryDetails = () => {
+    
+  };
+
+  const handleUploadFiles = () => {
+
+  };
+
   // Filter out `_id` and `category_id` or any other fields you don't want to display
   const filteredDetails = Object.entries(subcategoryDetails).filter(
     ([key]) => !['_id', 'category_id'].includes(key)
@@ -77,16 +91,39 @@ function SubCategoryDetails() {
           <tr>
             <th>Key</th>
             <th>Value</th>
+            <th>Actions</th>
           </tr>
         </thead>
         <tbody>
           {filteredDetails.map(([key, value]) => (
             <tr key={key}>
-              <td>{key}</td>
+              <td>
+                {key}
+              </td>
               <td>
                 {typeof value === 'object' && value !== null
                   ? JSON.stringify(value) // If value is an object, display its JSON string
                   : value}
+              </td>
+              <td>
+                  { typeof value !== 'object' &&
+                    <i
+                    className="bi bi-pencil-square edit-icon scd"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      setShowEditModal(true);
+                      setFieldName(key)
+                      setFieldValue(value)
+                    }}
+                  ></i>}
+                  <i
+                    className="bi bi-trash delete-icon"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      setShowDeleteModal(true);
+                      setFieldName(key)
+                    }}
+                  ></i>
               </td>
             </tr>
           ))}
@@ -112,6 +149,67 @@ function SubCategoryDetails() {
           Add Field
         </button>
       </div>
+
+      {/* <div className="add-field-form">
+        <input
+          type="text"
+          placeholder="Field name"
+          value={fieldName}
+          onChange={(e) => setFieldName(e.target.value)}
+          required
+        />
+        <input
+          type="file"
+          required
+        />
+        <button className="btn btn-primary" onClick={handleUploadFiles}>
+          Upload file
+        </button>
+      </div> */}
+
+      {showEditModal && (
+        <div className="modal">
+          <div className="modal-content">
+            <h3>Edit subcategory</h3>
+            <label>Field name:</label>
+            <input
+              type="text"
+              value={fieldName}
+              onChange={(e) => {
+                setFieldName(e.target.value)
+              }}
+            />
+            <label>Field value:</label>
+            <input
+              type="text"
+              value={fieldValue}
+              onChange={(e) => {
+                setFieldValue(e.target.value)
+              }}
+            />
+            <button className="btn btn-primary" onClick={handleEditSubCategoryDetails}>Update</button>
+            <button className="btn btn-secondary" onClick={() =>{
+              setFieldName('')
+              setFieldName('')
+              setShowEditModal(false)
+            } }>Cancel</button>
+          </div>
+        </div>
+      )}
+
+      {showDeleteModal && (
+        <div className="modal">
+          <div className="modal-content">
+            <h3>Do you want to delete {fieldName} ?</h3>
+            <button className="btn btn-danger" onClick={handleDeleteSubCategoryDetails}>Delete</button>
+            <button className="btn btn-secondary" onClick={() =>{
+              setFieldName('')
+              setShowDeleteModal(false)
+            } }>Cancel</button>
+          </div>
+        </div>
+      )}
+
     </div>
   );
 }
