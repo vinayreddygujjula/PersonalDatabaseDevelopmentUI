@@ -1,9 +1,11 @@
 .subcategory-details {
-  margin-top: 120px;
+  margin-top: 250px;
   padding: 20px;
-  min-height: 80vh;
   margin-left: 0px;
   padding-left: 0px;
+  height: 95vh;
+  margin-bottom: 30px;
+  padding-bottom: 30px;
 }
 
 .subcategory-table {
@@ -42,7 +44,6 @@
 .btn {
   display: inline-block;
   padding: 10px 20px;
-  background-color: #6c757d;
   color: #fff;
   border: none;
   border-radius: 5px;
@@ -53,7 +54,6 @@
 }
 
 .btn:hover {
-  background-color: #5a6268;
   transform: translateY(-2px);
 }
 
@@ -116,4 +116,24 @@
   padding: 20px;
   border-radius: 8px;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.edit-icon {
+  color: #4caf50;
+}
+
+.scd {
+  margin-right: 10px;
+}
+
+.edit-icon:hover {
+  color: #388e3c;
+}
+
+.delete-icon {
+  color: #f44336;
+}
+
+.delete-icon:hover {
+  color: #d32f2f;
 }
