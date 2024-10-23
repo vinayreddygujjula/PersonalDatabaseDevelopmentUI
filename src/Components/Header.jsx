@@ -1,24 +1,35 @@
-import React from 'react'
-import { useNavigate, Link } from 'react-router-dom';
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { logout } from "../Firebase/auth";
 import '../CSS/Header.css';
-import logo from '../Assets/logo.png'
-function Header({title}) {
+import logo from '../Assets/logo.png';
 
+function Header({ title }) {
+    const [confirmingLogout, setConfirmingLogout] = useState(false);
     const navigate = useNavigate();
+
     const handleNavigate = (category) => {
-        navigate(`/${category.toLowerCase()}`); // Navigate to /category page
-      };
-    const handleLogout = () => {
-        console.log('Logout clicked');
+        navigate(`/${category.toLowerCase()}`);
+    };
+
+    const confirmLogout = () => {
+        setConfirmingLogout(true);
+    };
+
+    const cancelLogout = () => {
+        setConfirmingLogout(false);
+    };
+
+    const proceedLogout = () => {
         logout();
         handleNavigate('');
-      };
+    };
+
     return (
-      <header className="header">
+        <header className="header">
             <div className="header-left">
                 <img
-                    src= { logo }
+                    src={logo}
                     alt="Logo"
                     className="header-logo"
                 />
@@ -27,13 +38,20 @@ function Header({title}) {
                 <h2>{title}</h2>
             </div>
             <div className="header-right">
-
-                <div onClick={logout} className="header-link">
-                    <i className="bi bi-box-arrow-right"></i>
-                </div>
+                {!confirmingLogout ? (
+                    <div onClick={confirmLogout} className="header-link">
+                        <i className="bi bi-box-arrow-right"></i>
+                    </div>
+                ) : (
+                    <div className="logout-confirmation">
+                        <span>Confirm Logout?</span>
+                        <button className="confirm-btn" onClick={proceedLogout}>Yes</button>
+                        <button className="cancel-btn" onClick={cancelLogout}>No</button>
+                    </div>
+                )}
             </div>
         </header>
-  )
+    );
 }
 
 export default Header;
