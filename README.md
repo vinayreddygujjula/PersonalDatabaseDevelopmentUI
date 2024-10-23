@@ -9,12 +9,15 @@ A personalized database web application tailored to individuals seeking an effic
 ![image](https://github.com/vinayreddygujjula/PersonalDatabaseDevelopmentUI/assets/143161111/4cfe38db-caa7-4dd6-8a92-6e65cbe46cba)
 
 ### UI screens
-1. Landing page
-2. Login
-3. Sign up
-4. Forgot password
-5. User dashboard
-6. Create category
-7. Category dashboard
-8. Create sub category
-9. Sub category details
+1. Login
+2. Sign up
+3. Forgot Password
+4. User dashboard/ Category Dashboard
+5. Sub-Category Dashboard
+6. Sub category Details
+7. Search
+
+### Running the application
+`cd PersonalDatabaseDevelopmentUI` <br/>
+`npm i`  <br/>
+`npm start` <br/>

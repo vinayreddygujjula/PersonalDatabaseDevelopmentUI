@@ -3,6 +3,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import Header from './Header';
 import '../CSS/SubCategoryDashboard.css';
+import Loader from './Loader';
 
 function SubCategory() {
   const location = useLocation();
@@ -107,7 +108,7 @@ function SubCategory() {
         <button onClick={() => setShowAddModal(true)}>+ { category.name }</button>
       </div>
       {loading ? (
-        <p>Loading subcategories...</p>
+        <Loader/>
       ) : (
         filteredSubcategories.length > 0 ? (
           <div className="subcategories-container">

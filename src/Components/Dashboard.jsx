@@ -4,7 +4,7 @@ import Header from './Header';
 import { getAuth } from 'firebase/auth';
 import axios from 'axios';
 import '../CSS/Dashboard.css';
-
+import Loader from './Loader';
 function Dashboard() {
   const [categories, setCategories] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -127,7 +127,7 @@ function Dashboard() {
 
         <div className="categories-container">
           {loading ? (
-            <p>Loading categories...</p>
+            <Loader/>
           ) : (
             filteredCategories.length > 0 ? (
               filteredCategories.map((category) => (

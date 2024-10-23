@@ -27,9 +27,10 @@ function Header({title}) {
                 <h2>{title}</h2>
             </div>
             <div className="header-right">
-                <Link to="/" className="header-link">
+
+                <div onClick={logout} className="header-link">
                     <i className="bi bi-box-arrow-right"></i>
-                </Link>
+                </div>
             </div>
         </header>
   )

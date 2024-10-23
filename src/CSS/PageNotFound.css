@@ -1,0 +1,38 @@
+/* CSS for 404 Page Not Found component */
+.pagenotfound-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-color: #e5e6fa;
+}
+
+.pagenotfound-container h1 {
+  font-size: 3rem;
+  color: #333;
+  margin-bottom: 20px;
+}
+
+.pagenotfound-container p {
+  font-size: 1.5rem;
+  color: #555;
+  margin-bottom: 30px;
+  text-align: center;
+  max-width: 600px;
+}
+
+.home-link {
+  padding: 12px 20px;
+  background-color: #4CAF50; /* Primary green from button styling */
+  color: white;
+  text-decoration: none;
+  border-radius: 8px;
+  font-size: 16px;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.home-link:hover {
+  background-color: #45a049; /* Lighter hover green from button hover */
+  transform: translateY(-2px);
+}

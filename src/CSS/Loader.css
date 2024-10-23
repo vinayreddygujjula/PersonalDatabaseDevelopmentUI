@@ -1,0 +1,29 @@
+/* CSS for Loader component */
+.loader-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: #e5e6fa;
+}
+
+.spinner {
+  border: 8px solid #f3f3f3;
+  border-top: 8px solid #333;
+  border-radius: 50%;
+  width: 60px;
+  height: 60px;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.loader-container p {
+  margin-top: 20px;
+  font-size: 1.2rem;
+  color: #333;
+}
+
