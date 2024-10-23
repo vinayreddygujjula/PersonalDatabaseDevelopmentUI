@@ -28,7 +28,7 @@ function Dashboard() {
     const userId = fetchUserId();
 
     if (userId) {
-      axios.get(`https://localhost:44392/getcategories/${userId}`)
+      axios.get(`http://localhost:5000/getcategories/${userId}`)
         .then((response) => {
           const transformedCategories = response.data.map(item => {
             const category = {};
@@ -57,7 +57,7 @@ function Dashboard() {
 
   const handleAddCategory = () => {
     const userId = fetchUserId();
-    axios.post(`https://localhost:44392/addcategory/${name}/${userId}`)
+    axios.post(`http://localhost:5000/addcategory/${name}/${userId}`)
       .then((response) => {
         const newCategory = {
           _id: response.data._id,
@@ -75,7 +75,7 @@ function Dashboard() {
   };
 
   const handleEditCategory = () => {
-    axios.put(`https://localhost:44392/updatecategory/${selectedCategory._id}/${name}`)
+    axios.put(`http://localhost:5000/updatecategory/${selectedCategory._id}/${name}`)
       .then((response) => {
         setCategories(prevCategories =>
           prevCategories.map(sub =>
@@ -93,7 +93,7 @@ function Dashboard() {
   };
 
   const handleDeleteCategory = () => {
-    axios.delete(`https://localhost:44392/deletecategory/${selectedCategory._id}`)
+    axios.delete(`http://localhost:5000/deletecategory/${selectedCategory._id}`)
       .then((response) => {
         setCategories(prevCategories =>
           prevCategories.filter(sub => sub._id !== selectedCategory._id)
