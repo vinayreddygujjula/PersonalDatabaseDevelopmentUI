@@ -35,7 +35,7 @@ function App() {
     <BrowserRouter>
       <Routes>
         {/* Home page route */}
-        <Route path="/" element={user? <Navigate to="/dashboard"/>:<Dashboard />} />
+        <Route path="/" element={user? <Navigate to="/dashboard"/>:<Login />} />
         {/* Prevent logged-in users from accessing login and register */}
         <Route path="register" element={user ? <Navigate to="/dashboard" /> : <Register />} />
         <Route path="login" element={user ? <Navigate to="/dashboard" /> : <Login />} />
