@@ -42,6 +42,7 @@ const ForgotPassword = () => {
             type="email"
             value={email}
             placeholder="Email"
+            onChange={(e) => setEmail(e.target.value)}
             autoFocus
           />
         </div>
