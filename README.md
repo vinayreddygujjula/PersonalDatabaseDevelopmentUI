@@ -15,6 +15,6 @@ A personalized database web application tailored to individuals seeking an effic
 4. Forgot password
 5. User dashboard
 6. Create category
-7. Category dashboard
+7. Sub category dashboard
 8. Create sub category
 9. Sub category details
