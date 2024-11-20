@@ -35,15 +35,15 @@
 }
 
 .category-card {
-  background-color: #f0f0f0;
+  background-color: white !important;
   border-radius: 12px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   padding: 20px;
-  width: 200px;
+  width: 225px !important;
   text-align: center;
   cursor: pointer;
   transition: transform 0.2s ease;
-  height: 100px;
+  height: 225px !important;
 }
 
 .category-card:hover {
@@ -56,10 +56,14 @@
 }
 
 .category-icon img {
-  width: 50px;
-  height: 50px;
+  margin-top: 10px;
+  width: 150px;
+  height: 150px;
 }
 
+.category-icon h2 {
+  margin-top: 10px;
+}
 .category-card h3 {
   margin: 0;
   font-size: 50px;
@@ -197,16 +201,16 @@
 .edit-icon, .delete-icon {
   font-size: 18px;
   cursor: pointer;
-  color: #666;
+  color: white; /* Initial color set to white */
   transition: color 0.2s ease;
 }
 
-.edit-icon:hover {
-  color: #007bff; 
+.category-card:hover .edit-icon {
+  color: green; /* Edit button turns green on hover */
 }
 
-.delete-icon:hover {
-  color: #dc3545; 
+.category-card:hover .delete-icon {
+  color: red; /* Delete button turns red on hover */
 }
 
 .category-card h3 {

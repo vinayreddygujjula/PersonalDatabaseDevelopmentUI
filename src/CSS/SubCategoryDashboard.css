@@ -17,7 +17,7 @@
 }
 
 .subcategory-card {
-    background-color: #f0f0f0;
+    background-color: white !important;
     border-radius: 12px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     padding: 20px;
@@ -70,11 +70,11 @@
     transition: color 0.2s ease;
 }
 
-.edit-icon:hover {
+.subcategory-card:hover .edit-icon {
     color: #007bff;
 }
 
-.delete-icon:hover {
+.subcategory-card:hover .delete-icon {
     color: #dc3545;
 }
 

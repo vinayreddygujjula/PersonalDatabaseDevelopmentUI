@@ -19,7 +19,7 @@ function SubCategoryDetails() {
     if (subCategory && subCategory._id) {
       const fetchSubCategoryDetails = async () => {
         try {
-          const response = await axios.get(`https://localhost:44392/getsubcategory/${subCategory._id}`);
+          const response = await axios.get(`http://localhost:20754/getsubcategory/${subCategory._id}`);
           const dataDictionary = response.data.reduce((acc, item) => {
             acc[item.name] = item.value;
             return acc;
@@ -48,7 +48,7 @@ function SubCategoryDetails() {
         };
 
         // Send the request to update the subcategory
-        await axios.put(`https://localhost:44392/updatesubcategory/${subcategoryDetails._id}`, requestData);
+        await axios.put(`http://localhost:20754/updatesubcategory/${subcategoryDetails._id}`, requestData);
 
         // Update the state with the new field locally after a successful update
         setSubcategoryDetails((prevDetails) => ({
@@ -65,17 +65,118 @@ function SubCategoryDetails() {
     }
   };
 
-  const handleEditSubCategoryDetails = () => {
+  const handleEditSubCategoryDetails = async () => {
     
+    if (fieldName && fieldValue) {
+      if(subcategoryDetails)
+      try {
+        // Prepare the request data
+        const requestData = {
+          fields: [
+            {
+              Name: fieldName,
+              Value: fieldValue,
+            },
+          ],
+        };
+
+        // Send the request to update the subcategory
+        await axios.put(`http://localhost:20754/updatesubcategory/${subcategoryDetails._id}`, requestData);
+
+        // Update the state with the new field locally after a successful update
+        setSubcategoryDetails((prevDetails) => ({
+          ...prevDetails,
+          [fieldName]: fieldValue,
+        }));
+
+        // Clear the input fields
+        setFieldName('');
+        setFieldValue('');
+
+        toast.success('Field updated successfully!')
+      } catch (error) {
+        console.error('Error updating sub-category field:', error);
+      }
+    }
+    setShowEditModal(false)
   };
 
-  const handleDeleteSubCategoryDetails = () => {
-    
-  };
+  const handleDeleteSubCategoryDetails = async () => {
+    console.log("deleting...");
+    try {
+      const requestData = {
+        fields: [
+          {
+            Name: fieldName,
+          },
+        ]
+      };
 
-  const handleUploadFiles = () => {
+        // Send the DELETE request with a data payload
+        await axios({
+          method: 'delete',
+          url: `http://localhost:20754/subcategory/deletefield/${subcategoryDetails._id}`,
+          data: requestData,  // Send the requestData inside the body
+          headers: {
+              'Content-Type': 'application/json',
+          }
+      });
 
-  };
+        setSubcategoryDetails(prevDetails =>
+          Object.fromEntries(Object.entries(prevDetails).filter(([key]) => key !== fieldName))
+      );
+
+        // Clear the input fields
+        setFieldName('');
+        setFieldValue('');
+        toast.success('Field deleted successfully!');
+    } catch (error) {
+        console.error('Error deleting sub-category field:', error);
+    }
+    setShowDeleteModal(false);
+};
+
+const handleUploadFiles = async () => {
+  if (!selectedFile) {
+    toast.error('Please select a file to upload.');
+    return;
+  }
+  if(!fieldName){
+    toast.error("Please enter the field name.");
+    return;
+  }
+  const formData = new FormData();
+  formData.append('file', selectedFile);
+  formData.append('fieldName', fieldName);
+
+  const requestData = {
+    fields: [
+      {
+        file : selectedFile,
+        Name : fieldName
+      },
+    ]
+  }
+  try {
+      const response = await axios.post(`http://localhost:20754/uploadFile/${subcategoryDetails._id}`, requestData);
+
+      // Update state with the new file URL (assuming it's an image)
+      const fileUrl = response.data.fileUrl;
+      setSubcategoryDetails((prevDetails) => ({
+          ...prevDetails,
+          [fieldName]: fileUrl,
+      }));
+
+      toast.success('File uploaded and subcategory updated!');
+  } catch (error) {
+      console.error('Error uploading file:', error);
+      toast.error('Failed to upload file');
+  }
+  setFieldName('')
+  setFieldValue('')
+  setSelectedFile(null)
+};
+
 
   // Filter out `_id` and `category_id` or any other fields you don't want to display
   const filteredDetails = Object.entries(subcategoryDetails).filter(
@@ -108,7 +209,7 @@ function SubCategoryDetails() {
               <td>
                   { typeof value !== 'object' &&
                     <i
-                    className="bi bi-pencil-square edit-icon scd"
+                    className="bi bi-pencil-square edit-icons scd"
                     onClick={(e) => {
                       e.stopPropagation();
                       setShowEditModal(true);
@@ -117,7 +218,7 @@ function SubCategoryDetails() {
                     }}
                   ></i>}
                   <i
-                    className="bi bi-trash delete-icon"
+                    className="bi bi-trash delete-icons"
                     onClick={(e) => {
                       e.stopPropagation();
                       setShowDeleteModal(true);
