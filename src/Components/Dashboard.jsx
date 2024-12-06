@@ -5,6 +5,8 @@ import { getAuth } from 'firebase/auth';
 import axios from 'axios';
 import '../CSS/Dashboard.css';
 import Loader from './Loader';
+import { BASE_URL } from '../Consts/constants';
+
 function Dashboard() {
   const [categories, setCategories] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -28,7 +30,7 @@ function Dashboard() {
     const userId = fetchUserId();
 
     if (userId) {
-      axios.get(`http://localhost:5000/getcategories/${userId}`)
+      axios.get(BASE_URL + `/getcategories/${userId}`)
         .then((response) => {
           const transformedCategories = response.data.map(item => {
             const category = {};
@@ -57,7 +59,7 @@ function Dashboard() {
 
   const handleAddCategory = () => {
     const userId = fetchUserId();
-    axios.post(`http://localhost:5000/addcategory/${name}/${userId}`)
+    axios.post(BASE_URL + `/addcategory/${name}/${userId}`)
       .then((response) => {
         const newCategory = {
           _id: response.data._id,
@@ -75,7 +77,7 @@ function Dashboard() {
   };
 
   const handleEditCategory = () => {
-    axios.put(`http://localhost:5000/updatecategory/${selectedCategory._id}/${name}`)
+    axios.put(BASE_URL + `/updatecategory/${selectedCategory._id}/${name}`)
       .then((response) => {
         setCategories(prevCategories =>
           prevCategories.map(sub =>
@@ -93,7 +95,7 @@ function Dashboard() {
   };
 
   const handleDeleteCategory = () => {
-    axios.delete(`http://localhost:5000/deletecategory/${selectedCategory._id}`)
+    axios.delete(BASE_URL + `/deletecategory/${selectedCategory._id}`)
       .then((response) => {
         setCategories(prevCategories =>
           prevCategories.filter(sub => sub._id !== selectedCategory._id)
@@ -127,7 +129,7 @@ function Dashboard() {
 
         <div className="categories-container">
           {loading ? (
-            <Loader/>
+            <Loader />
           ) : (
             filteredCategories.length > 0 ? (
               filteredCategories.map((category) => (

@@ -4,7 +4,7 @@ import axios from 'axios';
 import Header from './Header';
 import '../CSS/SubCategoryDashboard.css';
 import Loader from './Loader';
-
+import { BASE_URL } from '../Consts/constants';
 function SubCategory() {
   const location = useLocation();
   const { category } = location.state || {};
@@ -21,7 +21,7 @@ function SubCategory() {
   useEffect(() => {
     if (category && category._id) {
       // Fetch subcategories using the categoryId
-      axios.get(`http://localhost:5000/getsubcategories/${category._id}`)
+      axios.get(BASE_URL + `/getsubcategories/${category._id}`)
         .then((response) => {
           const transformedSubcategories = response.data.map(item => {
             const subcategory = {};
@@ -41,7 +41,7 @@ function SubCategory() {
   }, [category]);
 
   const handleAddSubCategory = () => {
-    axios.post(`http://localhost:5000/addsubcategory/${name}/${category._id}`)
+    axios.post(BASE_URL + `/addsubcategory/${name}/${category._id}`)
       .then((response) => {
         const newSubCategory = {
           _id: response.data._id,
@@ -57,7 +57,7 @@ function SubCategory() {
   };
 
   const handleEditSubCategory = () => {
-    axios.put(`http://localhost:5000/updatesubcategoryname/${selectedSubCategory._id}/${name}`)
+    axios.put(BASE_URL + `/updatesubcategoryname/${selectedSubCategory._id}/${name}`)
       .then(() => {
         setSubcategories(prevSubcategories =>
           prevSubcategories.map(sub =>
@@ -74,7 +74,7 @@ function SubCategory() {
   };
 
   const handleDeleteSubCategory = () => {
-    axios.delete(`http://localhost:5000/deletesubcategory/${selectedSubCategory._id}`)
+    axios.delete(BASE_URL + `/deletesubcategory/${selectedSubCategory._id}`)
       .then(() => {
         setSubcategories(prevSubcategories =>
           prevSubcategories.filter(sub => sub._id !== selectedSubCategory._id)
@@ -105,10 +105,10 @@ function SubCategory() {
           value={search}
           onChange={(e) => setSearch(e.target.value)}
         />
-        <button onClick={() => setShowAddModal(true)}>+ { category.name }</button>
+        <button onClick={() => setShowAddModal(true)}>+ {category.name}</button>
       </div>
       {loading ? (
-        <Loader/>
+        <Loader />
       ) : (
         filteredSubcategories.length > 0 ? (
           <div className="subcategories-container">

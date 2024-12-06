@@ -5,6 +5,7 @@ import '../CSS/SubCategoryDetail.css';
 import axios from 'axios';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { BASE_URL } from '../Consts/constants';
 
 function SubCategoryDetails() {
   const location = useLocation();
@@ -21,7 +22,7 @@ function SubCategoryDetails() {
     if (subCategory && subCategory._id) {
       const fetchSubCategoryDetails = async () => {
         try {
-          const response = await axios.get(`http://localhost:5000/getsubcategory/${subCategory._id}`);
+          const response = await axios.get(BASE_URL + `/getsubcategory/${subCategory._id}`);
           const dataDictionary = response.data.reduce((acc, item) => {
             acc[item.name] = item.value;
             return acc;
@@ -37,7 +38,7 @@ function SubCategoryDetails() {
 
   const handleAddField = async () => {
     const fieldExist = Object.keys(subcategoryDetails).some(x => x.toLowerCase() === fieldName.toLowerCase());
-    if(fieldExist){
+    if (fieldExist) {
       toast.error('field already exists!');
       // Clear the input fields
       setFieldName('');
@@ -45,68 +46,68 @@ function SubCategoryDetails() {
       return;
     }
     if (fieldName && fieldValue && !fieldExist) {
-      if(subcategoryDetails)
-      try {
-        // Prepare the request data
-        const requestData = {
-          fields: [
-            {
-              Name: fieldName,
-              Value: fieldValue,
-            },
-          ],
-        };
+      if (subcategoryDetails)
+        try {
+          // Prepare the request data
+          const requestData = {
+            fields: [
+              {
+                Name: fieldName,
+                Value: fieldValue,
+              },
+            ],
+          };
 
-        // Send the request to update the subcategory
-        await axios.put(`http://localhost:5000/updatesubcategory/${subcategoryDetails._id}`, requestData);
+          // Send the request to update the subcategory
+          await axios.put(BASE_URL + `/updatesubcategory/${subcategoryDetails._id}`, requestData);
 
-        // Update the state with the new field locally after a successful update
-        setSubcategoryDetails((prevDetails) => ({
-          ...prevDetails,
-          [fieldName]: fieldValue,
-        }));
+          // Update the state with the new field locally after a successful update
+          setSubcategoryDetails((prevDetails) => ({
+            ...prevDetails,
+            [fieldName]: fieldValue,
+          }));
 
-        // Clear the input fields
-        setFieldName('');
-        setFieldValue('');
-      } catch (error) {
-        console.error('Error updating sub-category:', error);
-      }
+          // Clear the input fields
+          setFieldName('');
+          setFieldValue('');
+        } catch (error) {
+          console.error('Error updating sub-category:', error);
+        }
     }
   };
 
   const handleEditSubCategoryDetails = async () => {
-    
+
     if (fieldName && fieldValue) {
-      if(subcategoryDetails)
-      try {
-        // Prepare the request data
-        const requestData = {
-          fields: [
-            {
-              Name: fieldName,
-              Value: fieldValue,
-            },
-          ],
-        };
+      if (subcategoryDetails)
+        try {
+          // Prepare the request data
+          const requestData = {
+            fields: [
+              {
+                Name: fieldName,
+                Value: fieldValue,
+              },
+            ],
+          };
 
-        // Send the request to update the subcategory
-        await axios.put(`http://localhost:5000/updatesubcategory/${subcategoryDetails._id}`, requestData);
+          // Send the request to update the subcategory
+          await axios.put(BASE_URL + `/updatesubcategory/${subcategoryDetails._id}`, requestData);
 
-        // Update the state with the new field locally after a successful update
-        setSubcategoryDetails((prevDetails) => ({
-          ...prevDetails,
-          [fieldName]: fieldValue,
-        }));
+          // Update the state with the new field locally after a successful update
+          setSubcategoryDetails((prevDetails) => ({
+            ...prevDetails,
+            [fieldName]: fieldValue,
+          }));
 
-        // Clear the input fields
-        setFieldName('');
-        setFieldValue('');
+          // Clear the input fields
+          setFieldName('');
+          setFieldValue('');
 
-        toast.success('Field updated successfully!')
-      } catch (error) {
-        console.error('Error updating sub-category field:', error);
-      }
+          toast.success('Field updated successfully!')
+        } catch (error) {
+          console.error('Error updating sub-category field:', error);
+        }
     }
     setShowEditModal(false)
   };
@@ -122,70 +123,70 @@ function SubCategoryDetails() {
         ]
       };
 
-        // Send the DELETE request with a data payload
-        await axios({
-          method: 'delete',
-          url: `http://localhost:5000/subcategory/deletefield/${subcategoryDetails._id}`,
-          data: requestData,  // Send the requestData inside the body
-          headers: {
-              'Content-Type': 'application/json',
-          }
+      // Send the DELETE request with a data payload
+      await axios({
+        method: 'delete',
+        url: BASE_URL + `/subcategory/deletefield/${subcategoryDetails._id}`,
+        data: requestData,  // Send the requestData inside the body
+        headers: {
+          'Content-Type': 'application/json',
+        }
       });
 
-        setSubcategoryDetails(prevDetails =>
-          Object.fromEntries(Object.entries(prevDetails).filter(([key]) => key !== fieldName))
+      setSubcategoryDetails(prevDetails =>
+        Object.fromEntries(Object.entries(prevDetails).filter(([key]) => key !== fieldName))
       );
 
-        // Clear the input fields
-        setFieldName('');
-        setFieldValue('');
-        toast.success('Field deleted successfully!');
+      // Clear the input fields
+      setFieldName('');
+      setFieldValue('');
+      toast.success('Field deleted successfully!');
     } catch (error) {
-        console.error('Error deleting sub-category field:', error);
+      console.error('Error deleting sub-category field:', error);
     }
     setShowDeleteModal(false);
-};
+  };
 
-const handleUploadFiles = async () => {
-  if (!selectedFile) {
-    toast.error('Please select a file to upload.');
-    return;
-  }
-  if(!fieldName){
-    toast.error("Please enter the field name.");
-    return;
-  }
-  const formData = new FormData();
-  formData.append('file', selectedFile);
-  formData.append('fieldName', fieldName);
+  const handleUploadFiles = async () => {
+    if (!selectedFile) {
+      toast.error('Please select a file to upload.');
+      return;
+    }
+    if (!fieldName) {
+      toast.error("Please enter the field name.");
+      return;
+    }
+    const formData = new FormData();
+    formData.append('file', selectedFile);
+    formData.append('fieldName', fieldName);
 
-  const requestData = {
-    fields: [
-      {
-        file : selectedFile,
-        Name : fieldName
-      },
-    ]
-  }
-  try {
+    const requestData = {
+      fields: [
+        {
+          file: selectedFile,
+          Name: fieldName
+        },
+      ]
+    }
+    try {
       const response = await axios.post(`http://localhost:5000/uploadFile/${subcategoryDetails._id}`, requestData);
 
       // Update state with the new file URL (assuming it's an image)
       const fileUrl = response.data.fileUrl;
       setSubcategoryDetails((prevDetails) => ({
-          ...prevDetails,
-          [fieldName]: fileUrl,
+        ...prevDetails,
+        [fieldName]: fileUrl,
       }));
 
       toast.success('File uploaded and subcategory updated!');
-  } catch (error) {
+    } catch (error) {
       console.error('Error uploading file:', error);
       toast.error('Failed to upload file');
-  }
-  setFieldName('')
-  setFieldValue('')
-  setSelectedFile(null)
-};
+    }
+    setFieldName('')
+    setFieldValue('')
+    setSelectedFile(null)
+  };
 
 
   // Filter out `_id` and `category_id` or any other fields you don't want to display
@@ -217,8 +218,8 @@ const handleUploadFiles = async () => {
                   : value}
               </td>
               <td>
-                  { typeof value !== 'object' &&
-                    <i
+                {typeof value !== 'object' &&
+                  <i
                     className="bi bi-pencil-square edit-icon scd"
                     onClick={(e) => {
                       e.stopPropagation();
@@ -227,14 +228,14 @@ const handleUploadFiles = async () => {
                       setFieldValue(value)
                     }}
                   ></i>}
-                  <i
-                    className="bi bi-trash delete-icon"
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      setShowDeleteModal(true);
-                      setFieldName(key)
-                    }}
-                  ></i>
+                <i
+                  className="bi bi-trash delete-icon"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    setShowDeleteModal(true);
+                    setFieldName(key)
+                  }}
+                ></i>
               </td>
             </tr>
           ))}
@@ -271,7 +272,7 @@ const handleUploadFiles = async () => {
         />
         <input
           type="file"
-          onChange={(e)=>setSelectedFile(e.target.files[0])}
+          onChange={(e) => setSelectedFile(e.target.files[0])}
           required
         />
         <button className="btn btn-primary" onClick={handleUploadFiles}>
@@ -300,11 +301,11 @@ const handleUploadFiles = async () => {
               }}
             />
             <button className="btn btn-primary" onClick={handleEditSubCategoryDetails}>Update</button>
-            <button className="btn btn-secondary" onClick={() =>{
+            <button className="btn btn-secondary" onClick={() => {
               setFieldName('')
               setFieldName('')
               setShowEditModal(false)
-            } }>Cancel</button>
+            }}>Cancel</button>
           </div>
         </div>
       )}
@@ -314,10 +315,10 @@ const handleUploadFiles = async () => {
           <div className="modal-content">
             <h3>Do you want to delete {fieldName} ?</h3>
             <button className="btn btn-danger" onClick={handleDeleteSubCategoryDetails}>Delete</button>
-            <button className="btn btn-secondary" onClick={() =>{
+            <button className="btn btn-secondary" onClick={() => {
               setFieldName('')
               setShowDeleteModal(false)
-            } }>Cancel</button>
+            }}>Cancel</button>
           </div>
         </div>
       )}

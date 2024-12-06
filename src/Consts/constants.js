@@ -1,0 +1,1 @@
+export const BASE_URL = "https://personaldb-guf4b9a0cqaeh7cc.canadacentral-01.azurewebsites.net";
