@@ -5,19 +5,19 @@ import '../CSS/ForgotPassword.css'
 import { useNavigate } from 'react-router-dom';
 import forgotPasswordImage from "../Assets/resetpassword.jpg"
 import { resetPassword } from "../Firebase/auth";
- 
+
 const ForgotPassword = () => {
   const [email, setEmail] = useState('');
   const [error, setError] = useState("");
   const navigate = useNavigate();
- 
+
   const handleCancel = () => {
     navigate('/');
   };
- 
+
   const handleSubmit = async (e) => {
     e.preventDefault();
- 
+
     if (!email) {
       toast.error('Please enter an email.');
       return;
@@ -26,16 +26,16 @@ const ForgotPassword = () => {
     try {
       await resetPassword(email);
       navigate('/');
-    } catch (error) {
-      console.error(error);
-      setError('Failed to send password reset email: ' + error.message);
+    } catch (err) {
+      setError('Failed to send password reset email: ' + err.message);
+      console.error(err);
     }
   };
- 
+
   return (
     <div className="forgot-password-form-container">
       <h2>Reset Password</h2>
-      <img className='forgot-password-image' src = { forgotPasswordImage } alt='forgotPassword'/> 
+      <img className='forgot-password-image' src={forgotPasswordImage} alt='forgotPassword' />
       <form className="forgot-password-form" onSubmit={handleSubmit}>
         <div className="form-group">
           <input
@@ -47,7 +47,7 @@ const ForgotPassword = () => {
           />
         </div>
         <div className='info'>
-          <p><span className ="glyphicon glyphicon-info-sign info-icon"></span>
+          <p><span className="glyphicon glyphicon-info-sign info-icon"></span>
             If you are registered, a password reset link will be sent to this email address.
           </p>
         </div>
@@ -64,5 +64,5 @@ const ForgotPassword = () => {
     </div>
   );
 };
- 
+
 export default ForgotPassword;
